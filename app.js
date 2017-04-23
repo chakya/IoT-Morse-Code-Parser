@@ -23,20 +23,6 @@ var stateRef = db.ref("/State"); // channel name
 var motionData= db.ref("/motionData")
 // ledRef.off()
 
-// ref.on("value", function(snapshot) {   //this callback will be invoked with each new object
-//   console.log(snapshot.val());         // How to retrive the new added object
-// }, function (errorObject) {             // if error
-//   console.log("The read failed: " + errorObject.code);
-// });
-
-// How to push new object
-// ref.push({
-//     id:2,
-//     type:'paradise',
-//     action:'on',
-//     time:127818271
-// });
-
 stateRef.limitToLast(50).on('child_changed', toggle);
     
 function toggle(data){
