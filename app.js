@@ -58,7 +58,14 @@ var morseTable = {
 
 // stateRef.limitToLast(50).on('child_changed', toggle);
 
+    // TODO: Log the answer in a database
+rl.question('What do you think of Node.js? ', (seqInput) => {
+  // TODO: Log the answer in a database
+  message=processSeq(seqInput)
+console.log(message)
 
+  rl.close();
+});
 
 function processSeq(seqInput){
   for(i = 0; i < seqInput.length; i++){
