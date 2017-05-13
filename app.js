@@ -1,6 +1,39 @@
 // var admin = require("firebase-admin");
 // var b = require('bonescript');
+const readline = require('readline');
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+var morseTable = {
+ 'SL' : 'A',
+ 'LSSS' : 'B',
+ 'LSLS' : 'C',
+ 'LSS' : 'D',
+ 'S' : 'E',
+ 'SSLS' : 'F',
+ 'LLS' : 'G',
+ 'SSSS' : 'H',
+ 'SS' : 'I',
+ 'SLLL' : 'J',
+ 'LSL' : 'K',
+ 'SLSS' : 'L',
+ 'LL' : 'M',
+ 'LS' : 'N',
+ 'LLL' : 'O',
+ 'SLLS' : 'P',
+ 'LLSL' : 'Q',
+ 'SLS' : 'R',
+ 'SSS' : 'S',
+ 'L' : 'T',
+ 'SSL' : 'U',
+ 'SSSL' : 'V',
+ 'SLL' : 'W',
+ 'LSSL' : 'X',
+ 'LSLL' : 'Y',
+ 'LLSS' : 'Z'
+};
 //Initialize all var needed for beaglebone
 // var led = "P8_8";
 // b.pinMode(led, 'out');
