@@ -60,6 +60,13 @@ var morseTable = {
 
 
 
+function processSeq(seqInput){
+  for(i = 0; i < seqInput.length; i++){
+    message=streamSignal(seqInput[i]);
+}
+return message
+}
+
 function toggle(data){
   var val = data.val();
   if (val.type=='led'){
