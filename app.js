@@ -120,7 +120,41 @@ function toggleMotion(state){
         else
         {
         console.log("No Motion Detected");
-         
+              if (currentCount===3)// if motion more than 3 seconds
+              {
+                //  motionData.once('value', function(Snapshot) {
+                //     longCount = parseInt(Snapshot.val().longMotion);
+                //     motionCount = parseInt(Snapshot.val().motion);
+                //     motionCount+=1;
+                //     longCount+=1;
+                //     motionDatdsa.update({'/longMotion':longCount, '/motion':motionCount});
+                    
+                //  });
+                  motionState='L'
+                  streamSignal(motionState)
+                  // seq4=seq4.substr(1)
+                  // console.log(seq4)
+                  //pass long count and motion count to be updated in client html 
+                  // socket.emit('longMotionPoll',longCount, motionCount)
+                  currentCount=0;
+              }
+              else if(currentCount>=1){// if 1<= motion<3 
+                    motionData.once('value', function(Snapshot) {
+                    shortCount = parseInt(Snapshot.val().shortMotion);
+                    motionCount = parseInt(Snapshot.val().motion);
+                    motionCount+=1;
+                    shortCount+=1;
+                    motionData.update({'/shortMotion':shortCount, '/motion':motionCount});
+                 });
+              
+                  //pass short count and motion count to be updated in client html 
+                  // socket.emit('shortMotionPoll',shortCount, motionCount)
+                  motionState='S'
+                  streamSignal(motionState)
+                  // seq4=seq4.substr(1)
+                  // console.log(seq4)
+                  currentCount=0;
+              }
     }
 // if (seq4=='LSLL'){
 //   console.log('Intruder Alert!!')
