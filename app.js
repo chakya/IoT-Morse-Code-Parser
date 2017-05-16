@@ -1,5 +1,18 @@
 var admin = require("firebase-admin");
-// var b = require("bonescript");
+// var b = require('bonescript');
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://assignment-2-team-94-482d5.firebaseio.com/"
+});
+
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+var db = admin.database();
+var motionRef = db.ref("/motion"); // channel name
+var messageRef = db.ref("/message")
 
 
 function loadMorse(filename){
@@ -24,11 +37,11 @@ function main(data) {
   output: process.stdout
   });
   morseTable=data;
-  // rl.question("Input your test sequence? ", (seqInput) => {
-  // message=processSeq(seqInput);
-  // console.log(message);
-  // rl.close();
-// });
+  rl.question("Input your test sequence? ", (seqInput) => {
+  message=processSeq(seqInput);
+  console.log(message);
+  rl.close();
+});
 }
 
 
@@ -57,6 +70,13 @@ var morseSeq=""
 var message=""
 var gapCount=0
 function streamSignal(signal){
+  motionRef.update({'/motionSeq':morseSeq});
+    if (signal==='L'){
+      motionRef.update({'/motionType':'Long'});
+    }
+    else if (signal==='S'){
+      motionRef.update({'/motionType':'Short'});
+    }
   if (signal !=" ")
   {
     morseSeq+=signal
@@ -73,6 +93,7 @@ function streamSignal(signal){
       message+=" "
     }
   }
+  messageRef.update({'/message':message});
   return message
 }
 
@@ -94,7 +115,7 @@ function toggleMotion(state){
         else
         {
         console.log("No Motion Detected");
-              if (currentCount===3)// if motion more than 3 seconds
+              if (currentCount>3)// if motion more than 3 seconds
               {
                 //  motionData.once("value", function(Snapshot) {
                 //     longCount = parseInt(Snapshot.val().longMotion);
@@ -113,13 +134,12 @@ function toggleMotion(state){
                   currentCount=0;
               }
               else if(currentCount>=1){// if 1<= motion<3 
-                    motionData.once("value", function(Snapshot) {
-                    shortCount = parseInt(Snapshot.val().shortMotion);
-                    motionCount = parseInt(Snapshot.val().motion);
-                    motionCount+=1;
-                    shortCount+=1;
-                    motionData.update({"/shortMotion":shortCount, "/motion":motionCount});
-                 });
+                //     motionData.once("value", function(Snapshot) {
+                //     shortCount = parseInt(Snapshot.val().shortMotion);
+                //     motionCount = parseInt(Snapshot.val().motion);
+                //     motionCount+=1;
+                //     shortCount+=1;
+                //  });
               
                   //pass short count and motion count to be updated in client html 
                   // socket.emit("shortMotionPoll",shortCount, motionCount)

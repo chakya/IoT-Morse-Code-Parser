@@ -1,9 +1,7 @@
-var led=document.getElementById("cmn-toggle-1");
 var motion=document.getElementById("cmn-toggle-2");
-var motionCount=document.getElementById('motionCount');
-var longHTML=document.getElementById('longMotionHTML');
-var shortHTML=document.getElementById('shortMotionHTML');
-var intruderHTML=document.getElementById('intruderHTML');
+var mSeq=document.getElementById('mSeq');
+var mState=document.getElementById('mState');
+var messageHTML=document.getElementById('message');
 
 function Server() {
   this.checkSetup();
@@ -14,13 +12,10 @@ this.motionDB();
 }
     // this.switchLED();
 
-
-
   Server.prototype.initFirebase = function () {
     this.database = firebase.database();
     this.storage = firebase.storage();
   };
-
 
 Server.prototype.motionDB = function () {
     motionState = this.database.ref('motionState');
@@ -42,12 +37,9 @@ function motionSwitch(){
 
 function reset(){
   console.log('reset')
-  firebase.database().ref("/motionData").update({'/longMotion':'', '/shortMotion':'','/intruder':'','/motion':''});
+  firebase.database().ref("/motion").update({'/motionSeq':'', '/motionType':''});
+  firebase.database().ref("/message").update({'/message':''});
 }
-
-
- 
-
 
   // Checks that the Firebase SDK has been correctly setup and configured.
   Server.prototype.checkSetup = function () {
@@ -64,18 +56,23 @@ window.onload = function () {
   window.Server = new Server();
 };
 
-var motionDataRef = firebase.database().ref('/motionData');
-motionDataRef.on('value', function(snapshot) {
+var motionRef = firebase.database().ref('/motion');
+motionRef.on('value', function(snapshot) {
   updateHTML(snapshot.val());
+});
+
+var messageRef = firebase.database().ref('/message');
+messageRef.on('value', function(snapshot) {
+  messageHTML.innerHTML=snapshot.val().message;
 });
 
 function updateHTML(data){
   console.log('update running')
-  motionCount.innerHTML=data.motion;
-  longHTML.innerHTML=data.longMotion;
-  shortHTML.innerHTML=data.shortMotion;
-  intruderHTML.innerHTML=data.intruder;
+  mState.innerHTML=data.motionType;
+  mSeq.innerHTML=data.motionSeq;
 }
+
+
 
 
 

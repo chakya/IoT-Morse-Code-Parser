@@ -654,7 +654,7 @@ input.cmn-toggle-yes-no:checked + label:after {
             Manually input motion
           </div>
           <div style="width: 250px; padding:10px;">
-            <input type="text" style="margin:auto;">
+            <input id="motionInput" type="text" style="margin:auto;">
           </div>
         </div><!-- /row -->
 
@@ -662,8 +662,8 @@ input.cmn-toggle-yes-no:checked + label:after {
           <div class="question">
             motion detected
           </div>
-          <div id="motionCount" style="text-align: left; width: 250px; padding:10px; ">
-              0
+          <div id="mState" style="text-align: left; width: 250px; padding:10px; ">
+              
           </div>
         </div><!-- /row -->
 
@@ -671,8 +671,8 @@ input.cmn-toggle-yes-no:checked + label:after {
           <div class="question">
             Motion Sequence
           </div>
-          <div id="motionCount" style="text-align: left; width: 250px; padding:10px;">
-              0
+          <div id="mSeq" style="text-align: left; width: 250px; padding:10px;">
+              
           </div>
         </div><!-- /row -->
 
@@ -680,8 +680,8 @@ input.cmn-toggle-yes-no:checked + label:after {
           <div class="question">
             Message
           </div>
-          <div id="motionCount" style="text-align: left; width: 250px;padding:10px; ">
-              0
+          <div id="message" style="text-align: left; width: 250px;padding:10px; ">
+              
           </div>
         </div><!-- /row -->
 
@@ -703,7 +703,7 @@ input.cmn-toggle-yes-no:checked + label:after {
 </div><!-- /#wrapper -->
   <!--Paste here Firebase Web configration-->
   <!--Begin-->
-<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -714,7 +714,6 @@ input.cmn-toggle-yes-no:checked + label:after {
     storageBucket: "assignment-2-team-94-482d5.appspot.com",
     messagingSenderId: "26384059606"
   };
-  console.log('run')
   firebase.initializeApp(config);
 </script>
   <!--End-->
