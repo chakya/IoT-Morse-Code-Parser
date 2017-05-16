@@ -1,4 +1,4 @@
-var admin = require("socket.io").listen();
+var admin = require("firebase-admin");
 // var b = require("bonescript");
 
 
@@ -141,8 +141,5 @@ function toggleMotion(state){
 }
 
 module.exports = {
-  main: main,
-  loadMorse: loadMorse,
   processSeq:processSeq,
-  streamSignal: streamSignal
 }

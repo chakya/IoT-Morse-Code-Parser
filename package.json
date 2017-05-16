@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase-admin": "^4.1.4"
+    "firebase-admin": "^4.1.4",
+    "http": "0.0.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "socketio": "^1.0.0"
   }
 }

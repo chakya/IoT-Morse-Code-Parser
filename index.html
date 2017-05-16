@@ -641,21 +641,20 @@ input.cmn-toggle-yes-no:checked + label:after {
 
         <div class="row">
           <div class="question">
-            Switch LED On/Off
+            Switch Motion Sensor On/Off
           </div>
-          <div class="switch">
-            <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onClick="ledSwitch()">
-            <label for="cmn-toggle-1"></label>
+          <div class="switch" style="width: 250px;">
+            <input id="cmn-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox" onClick="motionSwitch()">
+            <label for="cmn-toggle-2"></label>
           </div>
         </div><!-- /row -->
 
-        <div class="row">
+                <div class="row">
           <div class="question">
-            Switch Motion Sensor On/Off
+            Manually input motion
           </div>
-          <div class="switch">
-            <input id="cmn-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox" onClick="motionSwitch()">
-            <label for="cmn-toggle-2"></label>
+          <div style="width: 250px; padding:10px;">
+            <input type="text" style="margin:auto;">
           </div>
         </div><!-- /row -->
 
@@ -663,39 +662,28 @@ input.cmn-toggle-yes-no:checked + label:after {
           <div class="question">
             motion detected
           </div>
-          <div id="motionCount" style="text-align: center; width: 150px;">
+          <div id="motionCount" style="text-align: left; width: 250px; padding:10px; ">
               0
           </div>
         </div><!-- /row -->
 
-        <div class="row">
+   <div class="row">
           <div class="question">
-            long motions
+            Motion Sequence
           </div>
-          <div id="longMotionHTML" style="text-align: center; width: 150px;">
-               0
+          <div id="motionCount" style="text-align: left; width: 250px; padding:10px;">
+              0
           </div>
         </div><!-- /row -->
 
-        <div class="row">
+<div class="row">
           <div class="question">
-            Short motions
+            Message
           </div>
-          <div id="shortMotionHTML" style="text-align: center; width: 150px;">
-               0
+          <div id="motionCount" style="text-align: left; width: 250px;padding:10px; ">
+              0
           </div>
         </div><!-- /row -->
-
-        <div class="row">
-          <div class="question">
-            Intruder
-          </div>
-          <div id="intruderHTML" style="text-align: center; width: 150px;">
-               0
-          </div>
-        </div><!-- /row -->
-      <button type="button" onClick="reset()">Reset</button>
-      </div>
 
     </div>
   </div><!-- #main -->
