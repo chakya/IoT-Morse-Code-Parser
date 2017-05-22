@@ -11,40 +11,69 @@ describe('Word Processing', function() {
  // it() is a test case
 it('It must be a sequence',
 function() {
-var seq1="LS   SL   LL   S       SS   SSS       LSLS   SSSS   SS   SL   "
- expect(app.processSeq(seq1)).to.equal("NAME IS CHIA");
+var seq1="SL   "
+ expect(app.processSeq(seq1)).to.equal("A");
 });
 
-it('The length must be 11',
+it('not in dictionary',
 function() {
-var seq2="LS   SL   LL   S       SS   SSS       LSLS   SSSS   SS   SL"
- expect(app.processSeq(seq2)).to.have.lengthOf(11);
+var seq1="SSSSSSSL   "
+ expect(app.processSeq(seq1)).to.equal("");
 });
 
-it('Why the PAME',
+it('no short motion',
 function() {
-var seq1="LS   SL   LL   S       SS   SSS       LSLS   SSSS   SS   SL   "
- expect(app.processSeq(seq1)).to.equal("NAME IS CHIA");
+var seq1="LLLL   "
+ expect(app.processSeq(seq1)).to.equal("");
+});
+
+it('empty',
+function() {
+var seq1=""
+ expect(app.processSeq(seq1)).to.equal("");
+});
+
+it('Boundary',
+function() {
+var seq1="LLSS   "
+ expect(app.processSeq(seq1)).to.equal("Z");
 });
 });
 
 describe('motionType', function() {
  // it() is a test case
-it('Short and Long',
+it('short motion',
 function() {
-var seq1="0100011100011100000111111"
- expect(app.processMotion(seq1)).to.equal("SSS");
+var seq1="010"
+ expect(app.processMotion(seq1)).to.equal("S");
+});
+it('short motion',
+function() {
+var seq1="01110"
+ expect(app.processMotion(seq1)).to.equal("S");
 });
 
-it('Combinations',
+it('long motion',
 function() {
-var seq2="11110001111110011111100011000011110011"
- expect(app.processMotion(seq2)).to.equal("LLLSL");
+var seq2="011110"
+ expect(app.processMotion(seq2)).to.equal("L");
 });
 
-it('Empty',
+it('super long motion',
 function() {
-var seq1="11111"
+var seq1="0111111110"
+ expect(app.processMotion(seq1)).to.equal("L");
+});
+
+it('Not determined yet',
+function() {
+var seq1="01"
+ expect(app.processMotion(seq1)).to.equal("");
+});
+
+it('NO Motion',
+function() {
+var seq1=""
  expect(app.processMotion(seq1)).to.equal("");
 });
 });

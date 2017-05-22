@@ -42,7 +42,7 @@
  "SLSSS":"&",
  "LSLLS":"(",
  "LSLLSL":")",
- "LLSS":"-",
+ "LLSSS":"-",
  "SSLLSL":"_",
  "SLSLS":"+",
  "LSSSL":"=",
