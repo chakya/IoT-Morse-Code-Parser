@@ -7,7 +7,6 @@ function Server() {
   this.checkSetup();
   this.initFirebase();
   // this.loadMessages();
-  this.ledDB();
 this.motionDB();
 }
     // this.switchLED();

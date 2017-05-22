@@ -1,14 +1,112 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
 [debug] CLI Version:  3.5.0
-[debug] Platform:     darwin
-[debug] Node Version: v6.9.5
-[debug] Time:         Tue May 16 2017 10:55:46 GMT+0800 (MYT)
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Fri May 19 2017 00:46:39 GMT+0800 (+08)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...
 [info] 
-[info] Project Directory: /Users/charleswijaya/Documents/asg5/asg2
+[info] Project Directory: /var/lib/cloud9/asg5
 [info] Public Directory: ./
 [info] 
-[info] Server listening at: http://localhost:5000
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Sun May 22 2016 06:34:31 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Sun May 22 2016 06:33:30 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Sun May 22 2016 06:36:04 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Sun May 22 2016 07:16:19 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Mon May 22 2017 14:06:35 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Mon May 22 2017 14:12:46 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/bin/nodejs /usr/local/bin/firebase serve -o 192.168.7.2 -p 5000
+[debug] CLI Version:  3.5.0
+[debug] Platform:     linux
+[debug] Node Version: v4.8.0
+[debug] Time:         Mon May 22 2017 14:46:33 GMT+0800 (+08)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /var/lib/cloud9/asg5
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://192.168.7.2:5000

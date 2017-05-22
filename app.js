@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-// var b = require('bonescript');
+var b = require('bonescript');
 
 var serviceAccount = require("./serviceAccountKey.json");
 
@@ -13,7 +13,15 @@ admin.initializeApp({
 var db = admin.database();
 var motionRef = db.ref("/motion"); // channel name
 var messageRef = db.ref("/message")
-
+var motionInterval=null;
+var morseSignal="";
+currentCount=0;
+var morseSeq=""
+var message=""
+var gapCount=0
+var mSeq=""
+var motion = "P8_7";
+b.pinMode(motion, b.INPUT);
 
 function loadMorse(filename){
   var fs = require("fs");
@@ -49,28 +57,29 @@ function processSeq(seqInput){
   message=''
   morseSeq=''
   for(i = 0; i < seqInput.length; i++){
-    message=streamSignal(seqInput[i]);
+    message=streamSignal(seqInput[i], motionInterval);
 }
 return message
 }
 
+
+var stateRef = db.ref('/State/motion');
+stateRef.on('value', function(snapshot) {
+  toggle(snapshot.val());
+});
+
 function toggle(data){
-  // var val = data.val();
-  // if (val.type=="led"){
-  // toggleLed(val.state);
-  // }
-  // else{
-  toggleMotion(val.state)
+  toggleMotion(data.state)
 }
 // function toggleLed (state) {
 //   b.digitalWrite(led, state);
 // }
 
-var morseSeq=""
-var message=""
-var gapCount=0
-function streamSignal(signal){
-  motionRef.update({'/motionSeq':morseSeq});
+
+console.log('lets start')
+function streamSignal(signal, motionInterval){
+  motionRef.update({'/motionSeq':morseSignal});
+  
     if (signal==='L'){
       motionRef.update({'/motionType':'Long'});
     }
@@ -80,17 +89,32 @@ function streamSignal(signal){
   if (signal !=" ")
   {
     morseSeq+=signal
+    morseSignal+=signal
     gapCount=0
   }
   else { //if (signal===" ")
     gapCount+=1
     if (gapCount===3){
       //parse
-      message+=morseTable[morseSeq]
-      morseSeq=""
+      console.log(morseTable[morseSeq])
+      if (morseTable[morseSeq]){
+        message+=morseTable[morseSeq]
+        if (message==='SK'){
+          clearInterval(motionInterval);
+          console.log('terminated')
+          return
+        }
+       
+      }
+      else{
+        message+=''
+      }
+       morseSignal+=' '
+        morseSeq=""
     }
     else if (gapCount===7){
       message+=" "
+      morseSignal+='_'
     }
   }
   messageRef.update({'/message':message});
@@ -100,6 +124,10 @@ function streamSignal(signal){
 function toggleMotion(state){
   if (state===1)// if checked activate motion detector
   {
+      console.log('on')
+      mSeq=""
+      messageRef.update({'/message':''});
+      motionRef.update({'/motionType':'','motionSeq':''});
     motionInterval=setInterval(checkPIR, 1000); // Checks the Sensor Every Second
     function checkPIR(){
     b.digitalRead(motion, printStatus);
@@ -115,47 +143,40 @@ function toggleMotion(state){
         else
         {
         console.log("No Motion Detected");
+        streamSignal(" ",motionInterval)
               if (currentCount>3)// if motion more than 3 seconds
               {
-                //  motionData.once("value", function(Snapshot) {
-                //     longCount = parseInt(Snapshot.val().longMotion);
-                //     motionCount = parseInt(Snapshot.val().motion);
-                //     motionCount+=1;
-                //     longCount+=1;
-                //     motionDatdsa.update({"/longMotion":longCount, "/motion":motionCount});
-                    
                 //  });
                   motionState="L"
+                  mSeq+=motionState
                   streamSignal(motionState)
-                  // seq4=seq4.substr(1)
-                  // console.log(seq4)
-                  //pass long count and motion count to be updated in client html 
-                  // socket.emit("longMotionPoll",longCount, motionCount)
                   currentCount=0;
               }
               else if(currentCount>=1){// if 1<= motion<3 
-                //     motionData.once("value", function(Snapshot) {
-                //     shortCount = parseInt(Snapshot.val().shortMotion);
-                //     motionCount = parseInt(Snapshot.val().motion);
-                //     motionCount+=1;
-                //     shortCount+=1;
-                //  });
-              
-                  //pass short count and motion count to be updated in client html 
-                  // socket.emit("shortMotionPoll",shortCount, motionCount)
                   motionState="S"
-                  streamSignal(motionState)
-                  // seq4=seq4.substr(1)
-                  // console.log(seq4)
+                  mSeq+=motionState
+                  streamSignal(motionState, motionInterval)
                   currentCount=0;
               }
     }
+    return mSeq
+    }
+    
+    
+    function streamMotion(mDetectedSeq){
+        for(i = 0; i < mDetectedSeq.length; i++){
+            motionSeq=printStatus(mDetectedSeq[i]);
+            console.log(motionSeq)
+}
     }
   }
   else
   {
       // if unchecked stop interval
       console.log("stop");
+      morseSeq=""
+      message=""
+      morseSignal=""
       clearInterval(motionInterval);
   }
 }
