@@ -1,18 +1,7 @@
+//Initialize global variables
 var admin = require("firebase-admin");
 var b = require('bonescript');
-
 var serviceAccount = require("./serviceAccountKey.json");
-
-// Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://assignment-2-team-94-482d5.firebaseio.com/"
-});
-
-// As an admin, the app has access to read and write all data, regardless of Security Rules
-var db = admin.database();
-var motionRef = db.ref("/motion"); // channel name
-var messageRef = db.ref("/message")
 var motionInterval=null;
 var morseSignal="";
 currentCount=0;
@@ -22,7 +11,21 @@ var gapCount=0
 var mSeq=""
 var motion = "P8_7";
 b.pinMode(motion, b.INPUT);
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://assignment-2-team-94-482d5.firebaseio.com/"
+});
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+var db = admin.database();
+var motionRef = db.ref("/motion"); // channel name
+var messageRef = db.ref("/message")
+//load morse from a text file called morse.txt
+loadMorse("morse.txt");
+var morseTable;
+var stateRef = db.ref('/State/motion');
 
+//read file from the same directory with filename filename
 function loadMorse(filename){
   var fs = require("fs");
   fs.readFile("./morse.txt", "utf8", function (err,data) {
@@ -34,25 +37,12 @@ function loadMorse(filename){
   });
 }
 
-
-loadMorse("morse.txt");
-var morseTable;
 function main(data) {
-  // Receive user input
-  var readline = require("readline");
-  var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-  });
+  //initalize morseTable Data
   morseTable=data;
-  rl.question("Input your test sequence? ", (seqInput) => {
-  message=processSeq(seqInput);
-  console.log(message);
-  rl.close();
-});
 }
 
-
+//process sequence of Long and shorts to be intepreted as Alphabet
 function processSeq(seqInput){
   message=''
   morseSeq=''
@@ -62,44 +52,35 @@ function processSeq(seqInput){
 return message
 }
 
-
-var stateRef = db.ref('/State/motion');
+//Turn on and off motion Sensor
 stateRef.on('value', function(snapshot) {
-  toggle(snapshot.val());
+  toggleMotion(snapshot.val().state);
 });
-
-function toggle(data){
-  toggleMotion(data.state)
-}
-// function toggleLed (state) {
-//   b.digitalWrite(led, state);
-// }
-
 
 console.log('lets start')
 function streamSignal(signal, motionInterval){
   motionRef.update({'/motionSeq':morseSignal});
-  
+//Update the database  
     if (signal==='L'){
       motionRef.update({'/motionType':'Long'});
     }
     else if (signal==='S'){
       motionRef.update({'/motionType':'Short'});
     }
+
   if (signal !=" ")
   {
     morseSeq+=signal
     morseSignal+=signal
     gapCount=0
   }
-  else { //if (signal===" ")
+  else { 
     gapCount+=1
     if (gapCount===3){
       //parse
-      console.log(morseTable[morseSeq])
       if (morseTable[morseSeq]){
         message+=morseTable[morseSeq]
-        if (message==='SK'){
+        if (message==='SK'){//terminate if SK
           clearInterval(motionInterval);
           console.log('terminated')
           return
@@ -109,33 +90,26 @@ function streamSignal(signal, motionInterval){
       else{
         message+=''
       }
-       morseSignal+=' '
+       morseSignal+=' '//add space to signify new word
         morseSeq=""
     }
     else if (gapCount===7){
-      message+=" "
-      morseSignal+='_'
+      message+=" "//add space to message
+      morseSignal+='_'//add space if new word
     }
   }
   messageRef.update({'/message':message});
   return message
 }
 
-function toggleMotion(state){
-  if (state===1)// if checked activate motion detector
-  {
-      console.log('on')
-      mSeq=""
-      messageRef.update({'/message':''});
-      motionRef.update({'/motionType':'','motionSeq':''});
-    motionInterval=setInterval(checkPIR, 1000); // Checks the Sensor Every Second
-    function checkPIR(){
-    b.digitalRead(motion, printStatus);
+  function printStatus(x){
+    parseMotion(x.value)
   }
   
-    function printStatus(x) 
+
+    function parseMotion(x) 
     {
-        if(x.value === 1){
+        if(x === 1){
         console.log("Motion Detected");
         // socket.emit("motionDetected", currentCount)
         currentCount+=1
@@ -163,17 +137,34 @@ function toggleMotion(state){
     }
     
     
-    function streamMotion(mDetectedSeq){
+    
+    function processMotion(mDetectedSeq){
+       mSeq=""
         for(i = 0; i < mDetectedSeq.length; i++){
-            motionSeq=printStatus(mDetectedSeq[i]);
-            console.log(motionSeq)
+            mSeq=parseMotion(parseInt(mDetectedSeq[i]));//stream motions detected 0 if not detected 1 if detected
 }
+return mSeq
     }
+
+function toggleMotion(state){
+  if (state===1)// if checked activate motion detector
+  {
+      console.log('on')
+      mSeq=""
+      messageRef.update({'/message':''});
+      motionRef.update({'/motionType':'','motionSeq':''});
+    motionInterval=setInterval(checkPIR, 1000); // Checks the Sensor Every Second
+    function checkPIR(){
+    b.digitalRead(motion, printStatus);
+  }
+  
+
   }
   else
   {
       // if unchecked stop interval
       console.log("stop");
+      //reset everything
       morseSeq=""
       message=""
       morseSignal=""
@@ -183,4 +174,5 @@ function toggleMotion(state){
 
 module.exports = {
   processSeq:processSeq,
+  processMotion: processMotion
 }
