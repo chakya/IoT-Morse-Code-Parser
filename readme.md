@@ -1,4 +1,4 @@
-# IoT Control Panel Team 94 Charles Vincent
+# IoT Control Panel
 ### Functionality:
 IoT control panel that use firebase as the database the control led and motion sensor from beaglebone. The output of the motion sensor will be Classified  into long(>=3seconds) and short(<3 seconds) motion. The program will then translate long and short (Dash and dit) into it's corresponding alphabet based on morse code. 
 
